@@ -3,6 +3,14 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+orders_path = os.path.join(BASE_DIR, "olist_orders_dataset.csv")
+
+orders = pd.read_csv(orders_path)
+
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
@@ -39,7 +47,7 @@ st.markdown("""
 def load_and_process_data():
     try:
         # Load datasets
-        orders = pd.read_csv('olist_orders_dataset.csv')
+        orders = pd.read_csv(orders_path)
         reviews = pd.read_csv('olist_order_reviews_dataset.csv')
         customers = pd.read_csv('olist_customers_dataset.csv')
         products = pd.read_csv('olist_products_dataset.csv')
@@ -294,4 +302,5 @@ with tab3:
 
 # Viewing the raw data
 with st.expander("View Raw Data"):
+
     st.dataframe(filtered_df[['order_id', 'customer_state', 'order_estimated_delivery_date', 'order_delivered_customer_date', 'Delivery_Status', 'review_score']].head(100))
